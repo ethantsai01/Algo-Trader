@@ -15,22 +15,26 @@ def algorithm(stock):
     Volume = float(div[6].text.replace(',',''))
     avgVolume = float(div[7].text.replace(',',''))
 
-    #volume %
-    if Volume / avgVolume > 0.1:
-        print("volume percent buy")
-    else:
-        print("volume percent DONT buy")
-
-
-
-    #gap % from closing
+    #finds previous closing price and current price
     closingPrice = float(div[0].text.replace(',',''))
     div2 = soup.find_all('div', {'class' :"My(6px) Pos(r) smartphone_Mt(6px)"})
     ans = div2[0].text.split("+",1)
-    currentPrice = float(ans[0].replace(',',''))
+    currentPrice = ans[0]
+    price = float(currentPrice.replace(',',''))
 
-    if (currentPrice - closingPrice) / closingPrice > .2:
-        print("gap percentage buy")
+
+    #volume %
+    volumePercent = Volume / avgVolume
+    if volumePercent > 0.1:
+        print(stock.upper() + " volume percent at " + str(volumePercent) + " buy at " + currentPrice)
     else:
-        print("gap percentage DONT buy")
+        print(stock.upper() + " volume percent at " + str(volumePercent) + " DONT buy at " + currentPrice)
 
+    #gap % from closing
+    gapPercent = (price - closingPrice) / closingPrice
+    if gapPercent > .2:
+        print(stock.upper() + " gap percentage at " + str(gapPercent) + " buy  at " + currentPrice)
+    else:
+        print(stock.upper() + " gap percentage at " + str(gapPercent) + " DONT buy " + currentPrice)
+
+    print("")
