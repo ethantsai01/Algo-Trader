@@ -1,8 +1,9 @@
 from algo import algorithm
+from list import createList
 import schedule
 import time
 
-list = ['msft', 'aapl', 'ba', 'xspa', 'twtr', 'goog']
+list = createList()
 
 #execute algorithm
 def do_loop():
@@ -13,7 +14,7 @@ def do_loop():
 #scheduler
 schedule.every(5).seconds.do(do_loop)
 
-#timer
+#infinite timer
 while True:
     schedule.run_pending()
     time.sleep(1)
