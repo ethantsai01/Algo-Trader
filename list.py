@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
+#returns true if there is no duplicates
 def checkforDuplicates(listofElem, newElem):
     for x in listofElem:
         if newElem == x:
