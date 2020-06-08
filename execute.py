@@ -1,28 +1,21 @@
-from algo import algorithm
-from list import createList, checkforDuplicates
+from algo import preMarketAlgo
+from list import finalWatchlist
+from scheduler import timer
+from datetime import date
 import schedule
 import time
 
-#creates list from list.py
-watchlist = createList()
-
-#user input tickery symbols to add to watchlist
-response = ""
-while response != "done":
-    response = raw_input("Input stocks you want to watch, type 'done' if you don't: ")
-    
-    if checkforDuplicates(watchlist, response):
-        watchlist.insert(0,response)
-
 #execute algorithm
 def do_loop():
-    for i in watchlist:
-        algorithm(i)
+    for i in myWatchList:
+        preMarketAlgo(i)
 
+myWatchList = finalWatchlist()
+checkToContinue = timer()
 
-#scheduler
-schedule.every(5).seconds.do(do_loop)
-
+if checkToContinue == 1:
+    schedule.every(5).seconds.do(do_loop)
+    
 #infinite timer
 while True:
     schedule.run_pending()

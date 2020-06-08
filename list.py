@@ -1,5 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+from algo import preMarketAlgo
+
+
 
 
 #returns true if there is no duplicates
@@ -29,9 +32,29 @@ def createList():
                 if checkforDuplicates(stockList, temp.text):
                     stockList.append(str(temp.text))
 
+    print(stockList) 
     return stockList
 
 
+def finalWatchlist():
+    #creates list from list.py
+    watchlist = createList()
+
+    #user input ticker symbols to add to watchlist
+    response = ""
+    while response != "done":
+        response = raw_input("Input stocks you want to watch, type 'done' if you don't: ")
+        
+        if checkforDuplicates(watchlist, response):
+            watchlist.insert(0,response)
+
+        print("")  
+
+    return watchlist
+
+    
+    
+   
 
 
 

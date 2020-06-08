@@ -7,9 +7,9 @@ def plusOrMinus(temp):
     if temp.find("-") > 0:
         return temp.split("-",1)
     if temp.find(".") > 0:
-        return temp.rsplit(".",2)
+        return temp.rsplit(".",4)
 
-def algorithm(stock):
+def preMarketAlgo(stock):
     
     #data scaper
     r = requests.get("https://finance.yahoo.com/quote/" + format(stock))
@@ -21,7 +21,7 @@ def algorithm(stock):
     if not div:
         return
     else:
-        if div[6].text == "N/A":
+        if div[6].text == "N/A" or div[7].text == "N/A":
             return
         #finds current volume and avg volume
         Volume = float(div[6].text.replace(',',''))
@@ -35,18 +35,19 @@ def algorithm(stock):
         price = float(currentPrice)
 
 
-        #volume %
+        #volume % and gap %
         volumePercent = Volume / avgVolume
-        if volumePercent > 0.1:
-            print(stock.upper() + " volume percent at " + str(volumePercent) + " buy at " + currentPrice)
-        else:
-            print(stock.upper() + " volume percent at " + str(volumePercent) + " DONT buy at " + currentPrice)
-
-        #gap % from closing
         gapPercent = (price - closingPrice) / closingPrice
-        if gapPercent > .2:
-            print(stock.upper() + " gap percentage at " + str(gapPercent) + " buy  at " + currentPrice)
+
+        #thresholds
+        if volumePercent > 0.1 and gapPercent > .2:
+            print(stock.upper() + " at " + '\033[92m' + currentPrice + "\033[0m")
+            print("Volume %: " + str(volumePercent))
+            print("Gap %: " + str(gapPercent))
         else:
-            print(stock.upper() + " gap percentage at " + str(gapPercent) + " DONT buy " + currentPrice)
+            return
+
 
     print("")
+
+
