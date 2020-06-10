@@ -9,21 +9,18 @@ def findTime():
     temp = datetime.now()
     while temp <= time:
         temp = datetime.now().time()
-        print(temp)
     return temp
 
 
 def timer():
     #finds day of week
     today = date.today().weekday()
-    print(today)
 
     #runs until market opens
     currentTime = findTime()
-    print(currentTime.time())
 
     #scheduler
-    if today == 0 or today == 1 or today == 2 or today == 3 or today == 4 or today == 5:
+    if today <= 5:
         return 1
     else:
         return 0

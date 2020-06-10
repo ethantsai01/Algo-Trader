@@ -26,6 +26,8 @@ def preMarketAlgo(stock):
         #finds current volume and avg volume
         Volume = float(div[6].text.replace(',',''))
         avgVolume = float(div[7].text.replace(',',''))
+        if avgVolume == 0:
+            return
 
         #finds previous closing price and current price
         closingPrice = float(div[0].text.replace(',',''))
@@ -43,11 +45,11 @@ def preMarketAlgo(stock):
         if volumePercent > 0.1 and gapPercent > .2:
             print(stock.upper() + " at " + '\033[92m' + currentPrice + "\033[0m")
             print("Volume %: " + str(volumePercent))
-            print("Gap %: " + str(gapPercent))
+            print("Gap %: " + str(gapPercent) + "\n")
         else:
             return
 
 
-    print("")
+ 
 
 
